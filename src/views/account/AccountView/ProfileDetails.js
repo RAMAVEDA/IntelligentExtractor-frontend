@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
@@ -12,21 +12,8 @@ import {
   TextField,
   makeStyles
 } from '@material-ui/core';
+import axios from 'axios';
 
-const states = [
-  {
-    value: 'alabama',
-    label: 'Alabama'
-  },
-  {
-    value: 'new-york',
-    label: 'New York'
-  },
-  {
-    value: 'san-francisco',
-    label: 'San Francisco'
-  }
-];
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -35,11 +22,28 @@ const useStyles = makeStyles(() => ({
 const ProfileDetails = ({ className, ...rest }) => {
   const classes = useStyles();
   const [values, setValues] = useState({
-    firstName: 'Sakthi',
-    lastName: 'R',
-    password: 'test',
-    confirmpassword: 'test'
+    firstName1: '',
+    lastName1: '',
+    password1: '',
+    confirmpassword1: ''
   });
+
+  useEffect(() => {
+    axios.get(process.env.REACT_APP_BASE_URL+'user')
+        .then((res)=>{
+          res.data.map(x=>{
+            if (x['username']==sessionStorage.getItem('Username')){
+              setValues({
+                firstName1:x['firstname'],
+                lastName1:x['lastname']
+              })
+            }
+          })
+        })
+        .catch(err=>{
+          console.log('Error')
+        })
+  }, []);
 
   const handleChange = (event) => {
     setValues({
@@ -47,6 +51,22 @@ const ProfileDetails = ({ className, ...rest }) => {
       [event.target.name]: event.target.value
     });
   };
+
+  const handleSubmit = async (event) => {
+    console.log('submit')
+    var data = {}
+    data['username'] = sessionStorage.getItem('Username')
+    data['lastname'] = values.lastName1
+    data['firstname'] = values.firstName1
+    data['password'] = values.password1
+    return await axios.post(process.env.REACT_APP_BASE_URL+'user',data)
+      .then((res)=>{
+        console.log('saved');
+      })
+      .catch(err=>{
+        console.log('Error');
+      })
+  }
 
   return (
     <form
@@ -75,11 +95,12 @@ const ProfileDetails = ({ className, ...rest }) => {
                 fullWidth
                 helperText="Please specify the first name"
                 label="First name"
-                name="firstName"
+                name="firstName1"
                 onChange={handleChange}
                 required
-                value={values.firstName}
+                value={values.firstName1}
                 variant="outlined"
+                autoComplete="off"
               />
             </Grid>
             <Grid
@@ -90,11 +111,12 @@ const ProfileDetails = ({ className, ...rest }) => {
               <TextField
                 fullWidth
                 label="Last name"
-                name="lastName"
+                name="lastName1"
                 onChange={handleChange}
                 required
-                value={values.lastName}
+                value={values.lastName1}
                 variant="outlined"
+                autoComplete="off"
               />
             </Grid>
             <Grid
@@ -105,12 +127,13 @@ const ProfileDetails = ({ className, ...rest }) => {
               <TextField
                 fullWidth
                 label="Password"
-                name="password"
+                name="password1"
                 type="password"
                 onChange={handleChange}
                 required
-                value={values.password}
+                value={values.password1}
                 variant="outlined"
+                autoComplete="off"
               />
             </Grid>
             <Grid
@@ -121,11 +144,12 @@ const ProfileDetails = ({ className, ...rest }) => {
               <TextField
                 fullWidth
                 label="Confirm Password"
-                name="confirm_password"
+                name="confirm_password1"
                 type="confirm_password"
                 onChange={handleChange}
-                value={values.confirm_password}
+                value={values.confirm_password1}
                 variant="outlined"
+                autoComplete="off"
               />
             </Grid>
           </Grid>
@@ -139,6 +163,8 @@ const ProfileDetails = ({ className, ...rest }) => {
           <Button
             color="primary"
             variant="contained"
+            onclick={handleSubmit}
+            disabled="true"
           >
             Save details
           </Button>

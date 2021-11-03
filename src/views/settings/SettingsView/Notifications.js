@@ -122,6 +122,7 @@ const Notifications = ({ className, ...rest }) => {
           <Button
             color="primary"
             variant="contained"
+            disabled="true"
           >
             Save
           </Button>

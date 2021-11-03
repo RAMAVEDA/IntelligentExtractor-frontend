@@ -72,6 +72,8 @@ const Password = ({ className, ...rest }) => {
           <Button
             color="primary"
             variant="contained"
+            
+            disabled="true"
           >
             Update
           </Button>

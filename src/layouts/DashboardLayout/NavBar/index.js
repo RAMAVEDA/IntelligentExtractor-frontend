@@ -109,7 +109,7 @@ const NavBar = ({ onMobileClose, openMobile }) => {
           color="textPrimary"
           variant="h5"
         >
-          {sessionStorage.getItem("Username")}
+          {sessionStorage.getItem("FirstName")}
         </Typography>
         {/* <Typography
           color="textSecondary"

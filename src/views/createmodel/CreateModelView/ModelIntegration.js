@@ -145,7 +145,8 @@ var ModelIntegration=(props)=>{
       })
     const dict = {
       coordinate:coordinates,
-      modelname:props.docName
+      modelname:props.docName,
+      modelID:sessionStorage.getItem('modelid')
       // modelname:"Sakthi'smodel"
     }
     await axios.post(process.env.REACT_APP_BASE_URL+"savemodel",dict)
@@ -258,7 +259,7 @@ var ModelIntegration=(props)=>{
       var li=[]
       var pages = {}
       var i = 1
-      setPageTotal(res.data[1].length)
+      setPageTotal(res.data.length)
       res.data.map(x=>{
         console.log(imagelist,x)
         var v = (x).replace('//m','/m')
@@ -388,12 +389,6 @@ var ModelIntegration=(props)=>{
         
     
         </div>):(<div className={classes.upload}>
-          {/* <Input id="icon-button-file" type="file" style={{marginLeft:"10px", marginTop: '30px' }}
-      onChange={(e)=>setImage(e.target.files[0])}/>
-      <label htmlFor="icon-button-file">
-        <IconButton color="primary" aria-label="upload picture" component="span">
-        </IconButton>
-      </label> */}
 
       <Button
         variant="contained"
@@ -424,6 +419,7 @@ var ModelIntegration=(props)=>{
           <CircularProgress size={48} className={classes.buttonProgress} />
         )}
         </div>)}
+        {imagelist.length>0?(
         <div style={{width:'150%',marginTop:"20px"}}>
         <Box margintop='10px'>
         <Typography>Fields Created:</Typography>
@@ -525,7 +521,7 @@ var ModelIntegration=(props)=>{
         {fielderror!==''?
         <Alert severity="error">{fielderror}</Alert>:<div></div>}
          
-        </div>
+        </div>):<div></div>}
         <Snackbar open={open} autoHideDuration={5000}>
         <Alert severity="success">
           Saved the model successfully!!!

@@ -31,21 +31,8 @@ class CustomerListView extends Component{
           if (response.data.length > 0){
             // console.log(response.data)
               response.data.map(async model=>{
-                  var count = 0
-                  var comp = true
-                  // console.log('http://localhost:5000/field/ModelName/'+model['ModelName'].trim())
-                  await axios.get(process.env.REACT_APP_BASE_URL+'field/'+model['modelname'])
-                  .then(response1=>{
-                      if (response1.data.length > 0){
-                          count=response1.data.length;
-                          response1.data.map(x=>{
-                            if (x['fieldcoor'] === ''){
-                                comp = false
-                            }
-                          })
-                  }})
                   this.setState({userdetails:[...this.state.userdetails,{id:l,modelname:model['modelname'],
-                  modeltype:model['modeltype'],fieldcount:count,completed:comp}]})
+                  modeltype:model['modeltype'],fieldcount:model['fieldcount'],completed:model['finished']}]})
                   console.log(this.state.userdetails)
                   l++
               })
@@ -57,11 +44,12 @@ class CustomerListView extends Component{
     const t = this.state.userdetails.filter(
       p=>p.id === id
     )
-    t.map(p=>{
-      axios.delete(process.env.REACT_APP_BASE_URL+'field/'+p['modelname'])
-      .then(res=>{
+    console.log('ModelList-deleteModel',t)
+    t.map(async p=>{
+      await axios.delete(process.env.REACT_APP_BASE_URL+'field/'+p['modelname'])
+      .then(async (res)=>{
         console.log('res.body')
-        axios.delete(process.env.REACT_APP_BASE_URL+'model/'+p['modelname'])
+        await axios.delete(process.env.REACT_APP_BASE_URL+'model/'+p['modelname'])
         .then(res=>{
           console.log(res.body)
           const f = !this.state.deleted
@@ -71,7 +59,10 @@ class CustomerListView extends Component{
         }
         )
         })
-    })
+        window.location.reload(false)
+      }
+    
+    )
     
     console.log(this.state.deleted)
   }

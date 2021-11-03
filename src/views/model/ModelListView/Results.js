@@ -96,6 +96,7 @@ const Results = ({ className, userdetails,deleteModel, ...rest }) => {
   const [uploadfilelist,setUploadFileList] = useState([]);
 
   const showDia =(model)=>{
+    sessionStorage.setItem('filelist','')
     setOpen(true)
     setModel(model)
   }
@@ -108,6 +109,16 @@ const Results = ({ className, userdetails,deleteModel, ...rest }) => {
     setExtracted(false)
   }
 
+  const clearExtract=()=>{
+    setPercentage([])
+    var x = JSON.parse(sessionStorage.getItem('filelist'))
+    delete x[model]
+    setPercentage([])
+    setUploadFileList([])
+    setSelected([])
+    sessionStorage.setItem('filelist',JSON.stringify(x))
+    setUploaded(true)
+  }
   const extractText=()=>{
     var filelist = sessionStorage.getItem('filelist')
     console.log('extractText',filelist)
@@ -115,9 +126,10 @@ const Results = ({ className, userdetails,deleteModel, ...rest }) => {
     if (filelist !== null && filelist.length>0 && sessionStorage.getItem('filelist')){
         var data ={
           modelname:model,
-          filelist:JSON.parse(sessionStorage.getItem('filelist'))[model]
+          filelist:JSON.parse(sessionStorage.getItem('filelist'))[model],
+          user:sessionStorage.getItem('Username')
         }
-        
+        console.log(data,sessionStorage.getItem('Username'))
         axios.post(process.env.REACT_APP_BASE_URL+"extractValesAll",data)
         .then(res=>{
           console.log(res.data)
@@ -135,6 +147,7 @@ const Results = ({ className, userdetails,deleteModel, ...rest }) => {
         sessionStorage.setItem('filelist',JSON.stringify(x))
         console.log('uploadFIle',uploadfilelist,selected)
         setExtracted(true)
+        setUploaded(true)
         handleClose()
     }
   }
@@ -213,6 +226,7 @@ const Results = ({ className, userdetails,deleteModel, ...rest }) => {
 
   const upload=(n,file)=>{
     console.log('upload1',file)
+    
     let percentage_info = [...percentage]
     let data = new FormData();
     data.append(`file`,file)
@@ -233,13 +247,19 @@ const Results = ({ className, userdetails,deleteModel, ...rest }) => {
         var filelist = {}
         var list = []
         var str = sessionStorage.getItem('filelist')
-        if (sessionStorage.getItem('filelist') && str !== ''){
-        filelist = JSON.parse(str)
-        if (Object.keys(filelist).filter(x=>x===model).length > 0){
-          list = filelist[model]
+        try{
+          console.log(str,JSON.parse(str),filelist,Object.keys(filelist).filter(x=>x===model))
+          if (str){
+            filelist = JSON.parse(str)
+            if (Object.keys(filelist).filter(x=>x===model).length > 0){
+              list = filelist[model]
+            }
+        
+          }
         }
-      }
+        catch(e){}
         list.push(res.data)
+        console.log('data',filelist,res.data,model,list)
         filelist[model] = list
         sessionStorage.setItem('filelist',JSON.stringify(filelist))
         console.log("List",filelist[model].length, Object.keys(selected).length)
@@ -252,11 +272,6 @@ const Results = ({ className, userdetails,deleteModel, ...rest }) => {
     })
 
   }
-  const deletefile =(e)=>{
-    var file = e.target.id.slice(3,)
-    delete download[file]
-  }
-
   return (
     
   <MuiThemeProvider theme={colortheme}>
@@ -402,6 +417,12 @@ const Results = ({ className, userdetails,deleteModel, ...rest }) => {
         </DialogContent>
         
         <DialogActions>
+        <Button onClick={clearExtract} 
+                    color="primary"
+                    variant="contained"
+                    autoFocus>
+            Clear
+          </Button>
         
           <Button onClick={extractText} 
                     color="primary"

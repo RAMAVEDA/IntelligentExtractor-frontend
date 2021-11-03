@@ -1,10 +1,11 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-// import DateFnsUtils from '@date-io/date-fns';
-// import { KeyboardDatePicker,MuiPickersUtilsProvider  } from '@material-ui/pickers';
+import axios from 'axios';
 import {
+  Snackbar,
+  IconButton,
   Box,
   Button,
   Container,
@@ -13,8 +14,9 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import Page from 'src/components/Page';
-import axios from 'axios';
+import CloseIcon from '@material-ui/icons/Close';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -29,33 +31,11 @@ const useStyles = makeStyles((theme) => ({
 const RegisterView = () => {
   const classes = useStyles();
   const navigate = useNavigate();
-  // var {Storage} = require('@google-cloud/storage')
-  // const { Storage } = require('@google-cloud/storage');
-  // const { Storage } = require('@google-cloud/storage');
-  // const storage = new Storage();
-  // var s1 = new Storage()
-  // 'use strict'
-
-// const {Storage} = require('@google-cloud/storage')
-// const storage = new Storage()
-// console.log('It worked!')
-const {Storage} = require('@google-cloud/storage'); 
-console.log(Storage)
-  // const Storage = require('@google-cloud/storage')
-  // var storage = new Storage({
-  //   keyFilename:'extractor-314607-cc9a92774562.json'
-  //   });
-  // var s2 = storage.bucket('extractor_s1');
-  // var bucket = async ()=>{
-  //     var [t] = await storage.getBuckets().then(data=>{
-  //         var list = document.getElementsById('demo');
-  //         data.map(x=>{
-  //             var y = document.createElement('li');
-  //             y.value = x
-  //         })
-  //     })
-  // } 
-  // bucket()
+  const [errorUnique,setErrorUnique] = useState('');
+  const handleError=async (x)=>{
+    await setErrorUnique(x)
+    console.log(errorUnique)
+  }
   return (
     <Page
       className={classes.root}
@@ -63,6 +43,7 @@ console.log(Storage)
     >
       <ol id="demo">
         </ol>
+
       <Box
         display="flex"
         flexDirection="column"
@@ -74,25 +55,39 @@ console.log(Storage)
             initialValues={{
               username: '',
               password: '',
+              fname: '',
+              lname: '',
+              email: '',
               // dateofbirth: null
             }}
             validationSchema={
               Yup.object().shape({
                 username: Yup.string().max(255).required('Username is required'),
                 password: Yup.string().max(255).required('password is required'),
+                fname: Yup.string().max(255).required('First name is required'),
+                lname: Yup.string().max(255).required('Last Nname is required'),
+                email: Yup.string().max(255).required('Email is required')
                 // dateofbirth: Yup.date().required('Date of birth is required')
               })
             }
             onSubmit={async (values) => {
               const userdetails={
                 username:values.username,
-                password:values.password
+                password:values.password,
+                email:values.email,
+                firstname:values.fname,
+                lastname:values.lname
                 // dateofbirth:values.dateofbirth
               }
-              await axios.post(process.env.REACT_APP_BASE_URL+'user/add',userdetails)
+              await axios.post(process.env.REACT_APP_BASE_URL+'user',userdetails)
               .then((res)=>{
                 console.log(res)
+                if (res.data != 'success'){
+                  console.log(res.data)
+                  handleError(res.data)
+                }else{
                 navigate('/login', { replace: true });
+                }
               })
               .catch(err=>{
                 console.log('Error')
@@ -119,6 +114,44 @@ console.log(Storage)
                   </Typography>
                 </Box>
                 <TextField
+                  error={Boolean(touched.fname && errors.fname)}
+                  fullWidth
+                  helperText={touched.fname && errors.fname}
+                  label="First Name"
+                  margin="normal"
+                  name="fname"
+                  onChange={handleChange}
+                  type="fname"
+                  value={values.fname}
+                  variant="outlined"
+                  autoComplete="off"
+                />
+                <TextField
+                  error={Boolean(touched.lname && errors.lname)}
+                  fullWidth
+                  helperText={touched.lname && errors.lname}
+                  label="Last name"
+                  margin="normal"
+                  name="lname"
+                  onChange={handleChange}
+                  type="lname"
+                  value={values.lname}
+                  variant="outlined"
+                />
+                <TextField
+                  error={Boolean(touched.email && errors.email)}
+                  fullWidth
+                  helperText={touched.email && errors.email}
+                  label="Email"
+                  margin="normal"
+                  name="email"
+                  onChange={handleChange}
+                  type="email"
+                  value={values.email}
+                  variant="outlined"
+                  autoComplete="off"
+                />
+                <TextField
                   error={Boolean(touched.username && errors.username)}
                   fullWidth
                   helperText={touched.username && errors.username}
@@ -129,6 +162,7 @@ console.log(Storage)
                   onChange={handleChange}
                   value={values.username}
                   variant="outlined"
+                  autoComplete="off"
                 />
                 <TextField
                   error={Boolean(touched.password && errors.password)}
@@ -141,21 +175,9 @@ console.log(Storage)
                   type="password"
                   value={values.password}
                   variant="outlined"
+                  autoComplete="off"
                 />
-                {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <KeyboardDatePicker
-                  disableToolbar
-                  format="MM/dd/yyyy"
-                  margin="normal"
-                  name='dateofbirth'
-                  label="Date Of Birth"
-                  value={values.dateofbirth}
-                  onChange={handleChange}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change date',
-                  }}
-                />
-                </MuiPickersUtilsProvider> */}
+                
                 <Box
                   alignItems="center"
                   display="flex"
@@ -174,6 +196,8 @@ console.log(Storage)
                   >
                     Sign up now
                   </Button>
+                  {errorUnique!==''?
+                    <Alert severity="error">{errorUnique}</Alert>:<div></div>}
                 </Box>
                 <Typography
                   color="textSecondary"

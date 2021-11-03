@@ -157,12 +157,7 @@ class CreateModelView extends Component{
     }
     e.preventDefault();
     console.log('Save process')
-
     let details=this.state.details
-    const modeldetails = {
-        modelname:details['doc_name'],
-        modeltype:details['doc_type']
-    }
     const fielddetails= []
     details.field_details.map(detail=>{
         fielddetails.push({
@@ -172,18 +167,25 @@ class CreateModelView extends Component{
             modelname:details['doc_name']
         })
     })
+    
+    const modeldetails = {
+        modelname:details['doc_name'],
+        modeltype:details['doc_type'],
+        fieldcount:fielddetails.length
+    }
     console.log('axios:',modeldetails,fielddetails)
-    await axios.post(process.env.REACT_APP_BASE_URL+'model',modeldetails)
+    await axios.post(process.env.REACT_APP_BASE_URL+'model_field',{modeldetails:modeldetails,fielddetails:fielddetails})
     .then(res=>{
-        console.log('Doc',res.body)
-        fielddetails.map(async field=>{
-            await axios.post(process.env.REACT_APP_BASE_URL+'field',field)
-            .then(res=>{
-              console.log('Field:',res.body)
+        console.log('Doc',res)
+        // fielddetails.map(async field=>{
+        //     await axios.post(process.env.REACT_APP_BASE_URL+'field',field)
+        //     .then(res=>{
+        //       console.log('Field:',res.body)
+              sessionStorage.setItem('modelid',res.data)
               this.setState({saved:true})
               console.log(this.state.saved,'saved')
-            })
-        }) 
+            // })
+        // }) 
     })
     .catch(err=>{console.log(err)})
     

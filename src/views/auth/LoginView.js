@@ -60,15 +60,18 @@ const LoginView = () => {
                 password:values.password
               }
               let s = ''
+              let s1 = ''
               await axios.get(uri+'/'+user.username+'/'+user.password)
       
               .then(res=>{
                 console.log(uri+'/'+user.username+'/'+user.password)
-                console.log(res.data['username'])
+                console.log(res.data)
                 s = res.data['username']
+                s1 = res.data['firstname']
                     
                 if (s.length>0){
                   sessionStorage.setItem('Username',s)
+                  sessionStorage.setItem('FirstName',s1)
                   console.log(sessionStorage.getItem('Username'))
                   errorVisibleFun(null)
                   navigate('/app/dashboard', { replace: true });
