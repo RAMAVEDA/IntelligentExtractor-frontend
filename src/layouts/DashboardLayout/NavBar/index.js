@@ -19,9 +19,10 @@ import {
   Settings as SettingsIcon,
   ShoppingBag as ShoppingBagIcon,
   User as UserIcon,
-  UserPlus as UserPlusIcon,
+  GitHub  as github,
   Users as UsersIcon
 } from 'react-feather';
+import { Icon } from '@iconify/react';
 import NavItem from './NavItem';
 
 const items = [
@@ -50,12 +51,12 @@ const items = [
     icon: SettingsIcon,
     title: 'Settings'
   }
-  // ,
-  // {
-  //   href: '/404',
-  //   icon: AlertCircleIcon,
-  //   title: 'Error'
-  // }
+  ,
+  {
+    href: '/app/bot',
+    icon: github,
+    title: 'Ask me'
+  }
 ];
 
 const useStyles = makeStyles(() => ({
@@ -117,6 +118,7 @@ const NavBar = ({ onMobileClose, openMobile }) => {
         >
           {user.jobTitle}
         </Typography> */}
+        
       </Box>
       <Divider />
       <Box p={2}>

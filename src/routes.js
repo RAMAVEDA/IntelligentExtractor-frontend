@@ -10,6 +10,7 @@ import NotFoundView from 'src/views/errors/NotFoundView';
 import CreateModelView from 'src/views/createmodel/CreateModelView';
 import RegisterView from 'src/views/auth/RegisterView';
 import SettingsView from 'src/views/settings/SettingsView';
+import BotView from 'src/views/bot/BotView';
 import CreateModelField from 'src/views/createmodel/CreateModelView/CreateModelField';
 
 const routes = [
@@ -23,6 +24,7 @@ const routes = [
       { path: 'createmodel', element: <CreateModelView /> },
       { path: 'createmodel/createfield', element: <CreateModelField /> },
       { path: 'settings', element: <SettingsView /> },
+      { path: 'bot', element: <BotView /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },
