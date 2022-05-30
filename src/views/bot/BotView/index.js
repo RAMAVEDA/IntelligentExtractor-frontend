@@ -29,7 +29,7 @@ const SettingsView = () => {
         // border: "solid",
         minWidth: "100%",
         height: "80vh",
-      }} src='https://webchat.botframework.com/embed/hackathon-ie-qna-bot?s=eppLXtKmfDY.DFTJp-8LhcyPzXCKz7oqEE1CETKBm3Z-CbujujcftJc'  ></iframe>
+      }} src='https://webchat.botframework.com/embed/intelligentextractor-bot-ai?s=2DS5D1nMCYw.AzJX5M5AWiy1Xo2CZM86BgOhDnz5rcyO_dTtKrl6Fns'  ></iframe>
       </Container>
     </Page>
   );
