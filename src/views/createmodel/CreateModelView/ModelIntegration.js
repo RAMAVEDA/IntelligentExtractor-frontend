@@ -254,6 +254,7 @@ var ModelIntegration=(props)=>{
     const formData = new FormData()
     formData.append('file',imagename)
     formData.append('modelname',props.docName)
+    console.log(formData)
     await axios.post(process.env.REACT_APP_BASE_URL+"upload/",formData)
     .then(res=>{
       var li=[]
