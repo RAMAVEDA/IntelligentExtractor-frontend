@@ -135,7 +135,7 @@ const Results = ({ className, userdetails,deleteModel, ...rest }) => {
           console.log(res.data)
           var download_xl = download
           setDownload('')
-          download_xl[model]=process.env.REACT_APP_BASE_URL+"media/"+res.data
+          download_xl[model]=res.data
           console.log(download_xl)
           setDownload(download_xl)
         })
@@ -283,10 +283,10 @@ const Results = ({ className, userdetails,deleteModel, ...rest }) => {
       {/* {download
       } */}
       {Object.keys(download).map(x=>console.log(x))}
-      {/* {Object.keys(download).map(x=>(
+      {Object.keys(download).map(x=>(
           
-          <a className={clsx(classes.padd)} id={"id_"+x} download={x+".csv"} href={download[x]} onClick={deletefile}>{x}</a>
-      ))} */}
+          <a className={clsx(classes.padd)} id={"id_"+x} download={x+".csv"} href={download[x]} >{x}</a>
+      ))}
       {/* <a className={clsx(classes.padd)} id="downloadlink" download="model.csv" href="http://localhost:8000/media/f7bf33f8-524e-4288-85df-d7ec2bfa10a7.csv" >x</a> */}
       {/* <Link target={"http://localhost:8000/media/f7bf33f8-524e-4288-85df-d7ec2bfa10a7.csv"} to="your-link">Your Link</Link> */}
       

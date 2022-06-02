@@ -43,7 +43,7 @@ const Toolbar = ({ className, ...rest }) => {
       </Box>
       <Box mt={3}>
         <Card>
-          <CardContent>
+          {/* <CardContent>
             <Box maxWidth={500}>
               <TextField
                 fullWidth
@@ -63,7 +63,7 @@ const Toolbar = ({ className, ...rest }) => {
                 variant="outlined"
               />
             </Box>
-          </CardContent>
+          </CardContent> */}
         </Card>
       </Box>
     </div>
