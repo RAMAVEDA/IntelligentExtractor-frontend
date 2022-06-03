@@ -6,9 +6,6 @@ import {
 } from '@material-ui/core';
 import Page from 'src/components/Page';
 import Results from './Results';
-// import Toolbar from './Toolbar';
-// <Toolbar />
-// import { DataUsageSharp } from '@material-ui/icons';
 import axios from 'axios'
 
 class CustomerListView extends Component{
@@ -29,7 +26,6 @@ class CustomerListView extends Component{
       await axios.get(process.env.REACT_APP_BASE_URL+'model')
       .then(response => {
           if (response.data.length > 0){
-            // console.log(response.data)
               response.data.map(async model=>{
                   this.setState({userdetails:[...this.state.userdetails,{id:l,modelname:model['modelname'],
                   modeltype:model['modeltype'],fieldcount:model['fieldcount'],completed:model['finished']}]})
