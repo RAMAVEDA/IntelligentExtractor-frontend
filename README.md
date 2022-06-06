@@ -20,7 +20,7 @@ Deploy [IntelligentExtractor-backend](https://github.com/RAMAVEDA/IntelligentExt
 
 - Create a Azure QnA maker boot webservice and include end along with key
   in src/views/bot/BotView/index.js#L32
-- Add pyhon URL in .env file as shown below
+- Add python URL in .env file as shown below
   ```bash
     REACT_APP_BASE_URL = "http://intelligentextractor-backend.com/"
   ```
