@@ -6,9 +6,11 @@ A Low-Code/No-Code based Product which is scalable (hosted on Azure Kubernetes w
 
 ## Deployment
 
-To deploy this project run
+To deploy this project run.
+Deploy [IntelligentExtractor-backend](https://github.com/RAMAVEDA/IntelligentExtractor-backend.git) and get URL of deployment before starting Frontend deployemnt
 
 ### Required Azure Services for deployment
+
 - Azure QNA Maker boot
 - Azure container registry
 - Azure kubernetes cluster 
@@ -19,9 +21,10 @@ To deploy this project run
   in src/views/bot/BotView/index.js#L32
 - Add pyhon URL in .env file as shown below
   ```bash
-    REACT_APP_BASE_URL = "http://intelligent-backend.com/"
+    REACT_APP_BASE_URL = "http://intelligentextractor-backend.com/"
   ```
 ### Deployment steps
+
   ```bash
     git clone https://github.com/RAMAVEDA/IntelligentExtractor-frontend.git
     cd IntelligentExtractor-frontend
