@@ -21,18 +21,18 @@ To deploy this project run
   ```bash
     REACT_APP_BASE_URL = "http://intelligent-backend.com/"
   ```
-
-```bash
-  git clone https://github.com/RAMAVEDA/IntelligentExtractor-frontend.git
-  cd IntelligentExtractor-frontend
-  docker build -t intelligentextrator-frontend .
-  docker tag intelligentextrator-frontend {username}/intelligentextrator-frontend
-  docker login 
-  docker push  {username}/intelligentextrator-frontend
-  Create deployment.yml(point to docker image : {username}/intelligentextrator-frontend) and service.yml
-  kubectl apply -f deployment.yml
-  kubectl apply -f service.yml
-```
+### Deployment steps
+  ```bash
+    git clone https://github.com/RAMAVEDA/IntelligentExtractor-frontend.git
+    cd IntelligentExtractor-frontend
+    docker build -t intelligentextrator-frontend .
+    docker tag intelligentextrator-frontend {username}/intelligentextrator-frontend
+    docker login 
+    docker push  {username}/intelligentextrator-frontend
+    Create deployment.yml(point to docker image : {username}/intelligentextrator-frontend) and service.yml
+    kubectl apply -f deployment.yml
+    kubectl apply -f service.yml
+  ```
 
 
 ## Authors
