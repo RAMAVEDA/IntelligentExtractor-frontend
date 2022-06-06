@@ -12,13 +12,13 @@ Deploy [IntelligentExtractor-backend](https://github.com/RAMAVEDA/IntelligentExt
 
 ### Required Azure Services for deployment
 
-- Azure QNA Maker boot
-- Azure container registry
-- Azure kubernetes cluster 
+- Azure QnA Maker for Bot
+- Azure Container registry for hosting Docker images/optional to have DockerHub
+- Azure Kubernetes cluster 
 
-### Conifugration changes
+### Configration changes
 
-- Create a Azure QNA maker boot webservice and include end along with key
+- Create a Azure QnA maker boot webservice and include end along with key
   in src/views/bot/BotView/index.js#L32
 - Add pyhon URL in .env file as shown below
   ```bash
