@@ -37,7 +37,8 @@ Deploy [IntelligentExtractor-backend](https://github.com/RAMAVEDA/IntelligentExt
     kubectl apply -f deployment.yml
     kubectl apply -f service.yml
   ```**
-**Sample Images**
+
+### Sample Images
 
 Provided Sample Images under "Samples" folder of this repository for testing this application
 
