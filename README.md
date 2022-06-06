@@ -6,7 +6,8 @@ A Low-Code/No-Code based Product which is scalable (hosted on Azure Kubernetes w
 
 ## Deployment
 
-To deploy this project run.
+To deploy this project follow below instructions.
+
 Deploy [IntelligentExtractor-backend](https://github.com/RAMAVEDA/IntelligentExtractor-backend.git) and get URL of deployment before starting Frontend deployemnt
 
 ### Required Azure Services for deployment
