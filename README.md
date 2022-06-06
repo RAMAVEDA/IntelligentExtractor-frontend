@@ -17,7 +17,10 @@ To deploy this project run
 
 - Create a Azure QNA maker boot webservice and include end along with key
   in src/views/bot/BotView/index.js#L32
-- Add pyhon URL in .env file ( REACT_APP_BASE_URL:{python url} )
+- Add pyhon URL in .env file as shown below
+  ```bash
+    REACT_APP_BASE_URL = "http://intelligent-backend.com/"
+  ```
 
 ```bash
   git clone https://github.com/RAMAVEDA/IntelligentExtractor-frontend.git
