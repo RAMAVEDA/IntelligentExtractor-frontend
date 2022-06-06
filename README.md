@@ -36,8 +36,10 @@ Deploy [IntelligentExtractor-backend](https://github.com/RAMAVEDA/IntelligentExt
     Create deployment.yml(point to docker image : {username}/intelligentextrator-frontend) and service.yml
     kubectl apply -f deployment.yml
     kubectl apply -f service.yml
-  ```
+  ```**
+**Sample Images**
 
+Provided Sample Images under "Samples" folder of this repository for testing this application
 
 ## Authors
 
